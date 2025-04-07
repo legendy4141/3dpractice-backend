@@ -118,3 +118,23 @@ export const deletePlanTreatmentService = async (id) => {
     throw new Error("Error deleting PlanTreatment: " + error.message);
   }
 };
+
+export const deletePlanTreatmentByPracIDnCareplanIdService = async ({
+  practiceid,
+  careplanid,
+}) => {
+  try {
+    const result = await models.PlanTreatment.destroy({
+      where: {
+        practiceid,
+        careplanid,
+      },
+    });
+    if (result === 0) {
+      throw new Error("No PlanTreatment found");
+    }
+    return { message: "PlanTreatment deleted successfully" };
+  } catch (error) {
+    throw new Error("Error deleting PlanTreatment: " + error.message);
+  }
+};

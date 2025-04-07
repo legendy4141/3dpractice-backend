@@ -13,5 +13,9 @@ router.post(
 );
 router.put("/:id", planphaseController.updatePlanPhase);
 router.delete("/:id", planphaseController.deletePlanPhase);
+router.delete(
+  "/practiceid/:practiceid/careplanid/:careplanid",
+  planphaseController.deletePlanPhaseByPracIDnCareplanID
+);
 
 export default router;

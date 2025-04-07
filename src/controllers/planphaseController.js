@@ -5,6 +5,7 @@ import {
   getPlanPhaseByIdService,
   updatePlanPhaseService,
   deletePlanPhaseService,
+  deletePlanPhaseByPracIDnCareplanIdService,
   getPhasesByPracIDnCareplanIdService,
 } from "../services/planphaseService.js";
 
@@ -129,6 +130,24 @@ export const deletePlanPhase = async (req, res) => {
 
   try {
     const result = await deletePlanPhaseService(id);
+    if (!result) {
+      return res.status(404).json({ message: "PlanPhase not found" });
+    }
+    res.status(200).json({ message: "PlanPhase deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const deletePlanPhaseByPracIDnCareplanID = async (req, res) => {
+  const { practiceid, careplanid } = req.params;
+
+  try {
+    const result = await deletePlanPhaseByPracIDnCareplanIdService({
+      practiceid,
+      careplanid,
+    });
     if (!result) {
       return res.status(404).json({ message: "PlanPhase not found" });
     }

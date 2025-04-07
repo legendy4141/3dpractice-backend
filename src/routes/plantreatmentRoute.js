@@ -13,5 +13,9 @@ router.post("/", plantreatmentController.createPlanTreatment); // Create multipl
 router.post("/bulkedit", plantreatmentController.bulkEdit); // Create multiple PlanTreatments
 router.put("/:id", plantreatmentController.updatePlanTreatment); // Update PlanTreatment by ID
 router.delete("/:id", plantreatmentController.deletePlanTreatment); // Delete PlanTreatment by ID
+router.delete(
+  "/practiceid/:practiceid/careplanid/:careplanid",
+  plantreatmentController.deletePlanTreatmentByPracIDnCarePlanID
+); // Delete PlanTreatment by Practice ID and Care Plan ID
 
 export default router;

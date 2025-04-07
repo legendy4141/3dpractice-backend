@@ -6,6 +6,7 @@ import {
   getTreatmentsByPracIDnCareplanIdService,
   updatePlanTreatmentService,
   deletePlanTreatmentService,
+  deletePlanTreatmentByPracIDnCareplanIdService,
 } from "../services/planTreatmentService.js";
 
 // Create multiple PlanTreatments
@@ -104,6 +105,21 @@ export const deletePlanTreatment = async (req, res) => {
 
   try {
     const result = await deletePlanTreatmentService(id);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const deletePlanTreatmentByPracIDnCarePlanID = async (req, res) => {
+  const { practiceid, careplanid } = req.params;
+
+  try {
+    const result = await deletePlanTreatmentByPracIDnCareplanIdService({
+      practiceid,
+      careplanid,
+    });
     res.status(200).json(result);
   } catch (error) {
     console.error(error);
