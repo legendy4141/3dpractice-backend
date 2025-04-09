@@ -1,5 +1,6 @@
 import {
   getAllPhasesService,
+  getPracticeZeroPhasesService,
   getPhasesWithSecurityTypeService,
   getPhaseByIdService,
   createPhaseService,
@@ -11,6 +12,17 @@ import {
 export const getPhases = async (req, res) => {
   try {
     const phases = await getAllPhasesService();
+    res.status(200).json(phases);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching phases", error: error.message });
+  }
+};
+
+export const getPracticeZeroPhases = async (req, res) => {
+  try {
+    const phases = await getPracticeZeroPhasesService();
     res.status(200).json(phases);
   } catch (error) {
     res

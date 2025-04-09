@@ -1,5 +1,6 @@
 import {
   getAllExercisesService,
+  getAllBMnameService,
   getExerciseByIdService,
   createExerciseService,
   updateExerciseService,
@@ -12,6 +13,15 @@ export const getAllExercises = async (req, res) => {
   try {
     const exercises = await getAllExercisesService();
     res.status(200).json(exercises);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getAllBMname = async (req, res) => {
+  try {
+    const allBMname = await getAllBMnameService();
+    res.status(200).json(allBMname);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -6,6 +6,8 @@ const router = express.Router();
 // Route to get all Phases
 router.get("/", phaseController.getPhases);
 
+router.get("/practiceZero", phaseController.getPracticeZeroPhases);
+
 router.get(
   "/securitytype/:securitytypeId/practiceid/:practiceId",
   phaseController.getPhasesWithSecurityType

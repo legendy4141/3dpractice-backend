@@ -4,7 +4,9 @@ import * as videoController from "../controllers/videoController.js";
 const router = express.Router();
 
 // Route to get all Videos
-router.post("/", videoController.getVideos);
+router.post("/share", videoController.getVideos);
+
+router.get("/", videoController.getAllVideos);
 
 // Route to get a Video by ID
 router.get("/:id", videoController.getVideoById);

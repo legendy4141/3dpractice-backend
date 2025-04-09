@@ -9,7 +9,7 @@ import {
   deleteProtExerciseService,
   deleteByPracIDnProtIDService,
   copyProtExerciseService,
-} from "../services/protExerciseService.js";
+} from "../services/protexerciseService.js";
 
 // Get all ProtExercises
 export const getProtExercises = async (req, res) => {

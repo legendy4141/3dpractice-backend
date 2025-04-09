@@ -2,7 +2,9 @@ import models from "../models/index.js";
 import { Op } from "sequelize";
 // Get all Treatments
 export const getAllTreatmentsService = async () => {
-  return await models.Treatment.findAll();
+  return await models.Treatment.findAll({
+    order: [["name", "ASC"]],
+  });
 };
 
 export const getTreatmentsWithSecurityTypeService = async (

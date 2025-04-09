@@ -1,4 +1,5 @@
 import models from "../models/index.js";
+import { Op } from "sequelize";
 
 export const createUser = async (userData) => {
   try {
@@ -29,6 +30,24 @@ export const getUserByUsername = async (username) => {
   return models.User.findOne({
     where: {
       username,
+      [Op.or]: [{ securitytype: 2 }, { securitytype: 3 }],
+    },
+  });
+};
+
+export const getUserByPracticeID = async (practiceid) => {
+  return models.User.findOne({
+    where: {
+      practiceid,
+    },
+  });
+};
+
+export const getAdminUserByUsername = async (username) => {
+  return models.User.findOne({
+    where: {
+      username,
+      securitytype: 1,
     },
   });
 };

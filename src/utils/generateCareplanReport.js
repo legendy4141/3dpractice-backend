@@ -147,12 +147,6 @@ export const generateCareplanReport = async (
   phasesData,
   fileName
 ) => {
-  console.log("============");
-  console.log(treatmentsData.length);
-
-  console.log("+++++++++++");
-  console.log(phasesData.length);
-
   return new Promise((resolve, reject) => {
     const filePath = `public/reports/careplan/${fileName}`;
     const fonts = {

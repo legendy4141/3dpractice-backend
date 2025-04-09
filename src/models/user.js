@@ -54,18 +54,18 @@ const User = sequelize.define(
 );
 
 // Hash the password before saving it
-User.beforeCreate(async (user) => {
-  const salt = await bcrypt.genSalt(7);
-  user.password = await bcrypt.hash(user.password, salt);
-});
+// User.beforeCreate(async (user) => {
+//   const salt = await bcrypt.genSalt(7);
+//   user.password = await bcrypt.hash(user.password, salt);
+// });
 
-User.beforeSave(async (user) => {
-  if (user.password && user.changed("password")) {
-    // Password has changed, so hash the new password before saving
-    const salt = await bcrypt.genSalt(7);
-    user.password = await bcrypt.hash(user.password, salt);
-  }
-});
+// User.beforeSave(async (user) => {
+//   if (user.password && user.changed("password")) {
+//     // Password has changed, so hash the new password before saving
+//     const salt = await bcrypt.genSalt(7);
+//     user.password = await bcrypt.hash(user.password, salt);
+//   }
+// });
 
 // Compare the password
 User.prototype.comparePassword = async function (pwd) {

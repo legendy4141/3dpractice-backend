@@ -18,11 +18,11 @@ const createUser = async (req, res) => {
 
   try {
     // Hash the password before saving
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
       username,
-      password: hashedPassword,
+      password,
       securitytype,
       patientid,
       practiceid,
@@ -50,6 +50,28 @@ const getUsers = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "An error occurred while fetching users." });
+  }
+};
+
+const getUsersByPracticeID = async (req, res) => {
+  const { practiceid } = req.params;
+  try {
+    const users = await User.findAll({
+      where: {
+        practiceid,
+      },
+    });
+    if (users.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "No users found for this practice ID." });
+    }
+    res.status(200).json({ users });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "An error occurred while fetching users by practice ID.",
+    });
   }
 };
 
@@ -91,15 +113,16 @@ const updateUser = async (req, res) => {
     }
 
     // Hash password if provided
-    if (password) {
-      user.password = await bcrypt.hash(password, 10);
-    }
+    // if (password) {
+    //   user.password = await bcrypt.hash(password, 10);
+    // }
 
     user.username = username || user.username;
     user.securitytype = securitytype || user.securitytype;
     user.patientid = patientid || user.patientid;
     user.practiceid = practiceid || user.practiceid;
     user.suspended = suspended !== undefined ? suspended : user.suspended;
+    user.password = password || user.password;
     user.description = description || user.description;
     user.email = email || user.email;
 
@@ -131,4 +154,11 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { createUser, getUsers, getUserById, updateUser, deleteUser };
+export {
+  createUser,
+  getUsers,
+  getUsersByPracticeID,
+  getUserById,
+  updateUser,
+  deleteUser,
+};

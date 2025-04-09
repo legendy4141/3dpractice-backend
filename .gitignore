@@ -1,1 +1,3 @@
 node_modules
+public/reports
+logs/app.log

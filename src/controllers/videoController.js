@@ -1,6 +1,7 @@
 import {
   getVideoByRandomKeyService,
   getAllVideosService,
+  getVideosService,
   getVideoByIdService,
   createVideoService,
   updateVideoService,
@@ -13,6 +14,17 @@ export const getVideos = async (req, res) => {
 
   try {
     const videos = await getAllVideosService(userId);
+    res.status(200).json(videos);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching videos", error: error.message });
+  }
+};
+
+export const getAllVideos = async (req, res) => {
+  try {
+    const videos = await getVideosService();
     res.status(200).json(videos);
   } catch (error) {
     res

@@ -6,6 +6,8 @@ const router = express.Router();
 // Get all exercises
 router.get("/", exerciseController.getAllExercises);
 
+router.get("/allBMname", exerciseController.getAllBMname);
+
 // Get exercise by ID
 router.get("/:id", exerciseController.getExerciseById);
 

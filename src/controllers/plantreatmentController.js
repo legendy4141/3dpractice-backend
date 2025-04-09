@@ -7,7 +7,7 @@ import {
   updatePlanTreatmentService,
   deletePlanTreatmentService,
   deletePlanTreatmentByPracIDnCareplanIdService,
-} from "../services/planTreatmentService.js";
+} from "../services/plantreatmentService.js";
 
 // Create multiple PlanTreatments
 export const createPlanTreatment = async (req, res) => {

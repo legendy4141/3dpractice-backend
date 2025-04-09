@@ -6,6 +6,13 @@ export const getAllPhasesService = async () => {
   return await models.Phase.findAll();
 };
 
+export const getPracticeZeroPhasesService = async () => {
+  return await models.Phase.findAll({
+    where: { practiceid: 0 },
+    order: [["name", "ASC"]],
+  });
+};
+
 export const getPhasesWithSecurityTypeService = async (
   securitytypeId,
   practiceId

@@ -14,20 +14,20 @@ export const getVideoByRandomKeyService = async (id, randomKey) => {
 
 // Get all Videos
 export const getAllVideosService = async (userId) => {
-  console.log("#################################################");
+  // console.log("#################################################");
   const videos = await models.Video.findAll({
     order: [["displayname", "ASC"]],
   });
   const user = await models.User.findByPk(userId);
-  console.log("***************user", user);
+  // console.log("***************user", user);
   const practiceId = user.practiceid;
-  console.log("****************practiceId", practiceId);
+  // console.log("****************practiceId", practiceId);
   const practice = await models.Practice.findByPk(practiceId);
   if (!practice) {
     console.log("Practice is not found");
     return [];
   }
-  console.log("****************practice", practice);
+  // console.log("****************practice", practice);
   let practiceRandomKey = practice?.randomkey;
   if (
     practiceRandomKey === null ||
@@ -59,22 +59,27 @@ export const getAllVideosService = async (userId) => {
       phasedefaults: practice.phasedefaults,
       randomkey: randomId,
     };
-    console.log("***********need to change: ", updateData);
+    // console.log("***********need to change: ", updateData);
     //when randomid is founded???
     await practice.update(updateData);
     practiceRandomKey = randomId;
   }
-  console.log("****************practiceRandomKey", practiceRandomKey);
+  // console.log("****************practiceRandomKey", practiceRandomKey);
 
   // Map through each video and add the encrypted link
   return videos.map((video) => {
     const encryptedLink = buildLinkForID(practiceRandomKey, video.randomkey); // Encrypting videolink
-    console.log("full encrpyt URL", encryptedLink);
+    // console.log("full encrpyt URL", encryptedLink);
     return {
       ...video.toJSON(), // Converts Sequelize object to plain object
       encryptlink: encryptedLink, // Adding the new field to each video
     };
   });
+};
+
+//Get All Videos orderby displayname
+export const getVideosService = async () => {
+  return await models.Video.findAll({ order: [["displayname", "ASC"]] });
 };
 
 // Get a Video by ID

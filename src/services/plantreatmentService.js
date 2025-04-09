@@ -130,9 +130,6 @@ export const deletePlanTreatmentByPracIDnCareplanIdService = async ({
         careplanid,
       },
     });
-    if (result === 0) {
-      throw new Error("No PlanTreatment found");
-    }
     return { message: "PlanTreatment deleted successfully" };
   } catch (error) {
     throw new Error("Error deleting PlanTreatment: " + error.message);

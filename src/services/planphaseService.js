@@ -156,10 +156,6 @@ export const deletePlanPhaseByPracIDnCareplanIdService = async ({
       },
     });
 
-    if (!planPhases) {
-      throw new Error("PlanPhases not found");
-    }
-
     return { message: "PlanPhases deleted successfully" };
   } catch (error) {
     throw new Error("Error deleting PlanPhases: " + error.message);

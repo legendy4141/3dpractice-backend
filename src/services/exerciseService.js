@@ -4,8 +4,23 @@ import { Op } from "sequelize";
 // Get all exercises
 export const getAllExercisesService = async () => {
   try {
-    const exercises = await models.Exercise.findAll();
+    const exercises = await models.Exercise.findAll({
+      order: [["name", "ASC"]],
+    });
     return exercises;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllBMnameService = async () => {
+  try {
+    const allBMname = await models.Exercise.findAll({
+      attributes: ["bmname"],
+      group: ["bmname"],
+      order: [["bmname", "ASC"]],
+    });
+    return allBMname.map((exercise) => exercise.bmname);
   } catch (error) {
     throw error;
   }

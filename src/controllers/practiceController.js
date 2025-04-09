@@ -2,6 +2,7 @@ import {
   createPracticeService,
   getAllPracticesService,
   getPracticeByIdService,
+  getAllPracticesWithStatusService,
   updatePracticeService,
   deletePracticeService,
 } from "../services/practiceService.js";
@@ -72,6 +73,15 @@ export const getAllPractices = async (req, res) => {
   }
 };
 
+export const getAllPracticesWithStatus = async (req, res) => {
+  try {
+    const practices = await getAllPracticesWithStatusService();
+    res.status(200).json(practices);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
 // Get a practice by ID
 export const getPracticeById = async (req, res) => {
   const { id } = req.params;

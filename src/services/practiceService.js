@@ -62,6 +62,31 @@ export const getAllPracticesService = async () => {
   }
 };
 
+export const getAllPracticesWithStatusService = async () => {
+  try {
+    const practices = await models.Practice.findAll();
+    const practicesWithStatus = await Promise.all(
+      practices.map(async (practice) => {
+        // Find if any user associated with the practice is suspended
+        const user = await models.User.findOne({
+          where: {
+            practiceid: practice.practiceid,
+          },
+        });
+
+        // Add status to the practice object
+        return {
+          ...practice.toJSON(),
+          status: user?.suspended,
+        };
+      })
+    );
+    return practicesWithStatus;
+  } catch (error) {
+    throw new Error("Error fetching practices: " + error.message);
+  }
+};
+
 // Service to get a practice by ID
 export const getPracticeByIdService = async (id) => {
   return await models.Practice.findOne({ where: { practiceid: id } });
