@@ -43,6 +43,22 @@ export const getUserByPracticeID = async (practiceid) => {
   });
 };
 
+export const updateStatusService = async (practiceid) => {
+  const users = await models.User.findAll({ where: { practiceid } });
+
+  await Promise.all(
+    users.map(async (user) => {
+      if (user.suspended === 0) {
+        user.suspended = 1;
+        await user.save();
+      } else if (user.suspended === 1) {
+        user.suspended = 0;
+        await user.save();
+      }
+    })
+  );
+};
+
 export const getAdminUserByUsername = async (username) => {
   return models.User.findOne({
     where: {

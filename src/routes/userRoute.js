@@ -10,6 +10,7 @@ router.get("/:id", userController.getUserById); // Get a single user by ID
 router.get("/practiceid/:practiceid", userController.getUsersByPracticeID); // Get a single user by ID
 router.post("/", userController.createUser);
 router.put("/:id", userController.updateUser);
+router.put("/changestatus/:practiceid", userController.updateStatus);
 router.delete("/:id", userController.deleteUser);
 
 export default router;

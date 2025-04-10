@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import User from "../models/user.js";
 import jwt from "jsonwebtoken";
 import { generateToken } from "../services/authService.js";
+import { updateStatusService } from "../services/userService.js";
 
 // Create a new user
 const createUser = async (req, res) => {
@@ -136,6 +137,16 @@ const updateUser = async (req, res) => {
   }
 };
 
+const updateStatus = async (req, res) => {
+  const { practiceid } = req.params;
+  try {
+    const updatedUsers = await updateStatusService(practiceid);
+    res.status(200).json(updatedUsers);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // Delete a user
 const deleteUser = async (req, res) => {
   const { id } = req.params;
@@ -161,4 +172,5 @@ export {
   getUserById,
   updateUser,
   deleteUser,
+  updateStatus,
 };
