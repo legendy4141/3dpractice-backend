@@ -7,6 +7,7 @@ import {
   getIDOnlyService,
   getExercisesOnlyService,
   getTreatmentlistOnlyService,
+  getExerciseListByIDsService,
 } from "../services/conditionService.js";
 
 // Get all Conditions
@@ -18,6 +19,16 @@ export const getConditions = async (req, res) => {
     res
       .status(500)
       .json({ message: "Error fetching conditions", error: error.message });
+  }
+};
+
+export const getExerciseListByIDs = async (req, res) => {
+  const { ids } = req.body;
+  try {
+    const exerciseList = await getExerciseListByIDsService(ids);
+    res.status(200).json(exerciseList);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 

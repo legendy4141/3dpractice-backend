@@ -12,6 +12,8 @@ router.get("/:id", conditionController.getConditionById);
 // Route to create a new Condition
 router.post("/", conditionController.createCondition);
 
+router.post("/ids", conditionController.getExerciseListByIDs);
+
 // Route to update a Condition
 router.put("/:id", conditionController.updateCondition);
 

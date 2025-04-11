@@ -6,12 +6,23 @@ import {
   updateExerciseService,
   deleteExerciseService,
   getSortedExercisesByIdsService,
+  getNamenBMnameByIdService,
 } from "../services/exerciseService.js";
 
 // Get all exercises
 export const getAllExercises = async (req, res) => {
   try {
     const exercises = await getAllExercisesService();
+    res.status(200).json(exercises);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getExercisesByIDs = async (req, res) => {
+  const { ids } = req.body;
+  try {
+    const exercises = await getNamenBMnameByIdService(ids);
     res.status(200).json(exercises);
   } catch (error) {
     res.status(500).json({ error: error.message });

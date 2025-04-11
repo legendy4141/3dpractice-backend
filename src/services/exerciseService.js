@@ -46,8 +46,6 @@ export const getNamenBMnameByIdService = async (ids) => {
 
   const exercises = await models.Exercise.findAll({
     where: { id: { [Op.in]: ids } },
-    attributes: ["name", "bmname"],
-    raw: true,
   });
 
   return exercises;

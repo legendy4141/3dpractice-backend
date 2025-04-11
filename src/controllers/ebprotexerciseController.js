@@ -1,9 +1,13 @@
 import {
   getAllEBProtExercisesService,
   getEBProtExerciseByIdService,
+  getEBProtExercisesByProtIdService,
   createEBProtExerciseService,
+  bulkCreateService,
   updateEBProtExerciseService,
   deleteEBProtExerciseService,
+  bulkEditService,
+  bulkDeleteService,
 } from "../services/ebprotexerciseService.js";
 
 // Get all EBProtExercises
@@ -28,6 +32,21 @@ export const getEBProtExerciseById = async (req, res) => {
       return res.status(404).json({ message: "EBProtExercise not found" });
     }
     res.status(200).json(exercise);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching EBProtExercise", error: error.message });
+  }
+};
+
+export const getEBProtExercisesByProtId = async (req, res) => {
+  const { protocolid } = req.params;
+  try {
+    const exercises = await getEBProtExercisesByProtIdService(protocolid);
+    if (!exercises) {
+      return res.status(404).json({ message: "EBProtExercise not found" });
+    }
+    res.status(200).json(exercises);
   } catch (error) {
     res
       .status(500)
@@ -72,6 +91,44 @@ export const createEBProtExercise = async (req, res) => {
   }
 };
 
+export const bulkCreate = async (req, res) => {
+  const { protocolid, exercises } = req.body; // Assuming the request body contains an array of exercises
+  try {
+    const createdExercises = await bulkCreateService(protocolid, exercises);
+    res.status(201).json(createdExercises);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error creating EBProtExercises",
+      error: error.message,
+    });
+  }
+};
+
+export const bulkEdit = async (req, res) => {
+  const { protocolid, exercises } = req.body; // Assuming the request body contains an array of exercises
+  try {
+    const editedExercises = await bulkEditService(protocolid, exercises);
+    res.status(201).json(editedExercises);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error updating EBProtExercises",
+      error: error.message,
+    });
+  }
+};
+
+export const bulkDelete = async (req, res) => {
+  const { protocolid } = req.body; // Assuming the request body contains an array of exercises
+  try {
+    const editedExercises = await bulkDeleteService(protocolid);
+    res.status(201).json(editedExercises);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error updating EBProtExercises",
+      error: error.message,
+    });
+  }
+};
 // Update an EBProtExercise
 export const updateEBProtExercise = async (req, res) => {
   const { id } = req.params;

@@ -2,7 +2,7 @@ import models from "../models/index.js";
 
 // Get all EBProtocols
 export const getAllEBProtocolsService = async () => {
-  return await models.EBProtocol.findAll();
+  return await models.EBProtocol.findAll({ order: [["protocolname", "ASC"]] });
 };
 
 // Get an EBProtocol by ID

@@ -14,6 +14,8 @@ router.get("/:id", exerciseController.getExerciseById);
 // Create a new exercise
 router.post("/", exerciseController.createExercise);
 
+router.post("/ids", exerciseController.getExercisesByIDs);
+
 // Update an exercise
 router.put("/:id", exerciseController.updateExercise);
 

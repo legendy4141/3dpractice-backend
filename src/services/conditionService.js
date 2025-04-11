@@ -63,3 +63,38 @@ export const getTreatmentlistOnlyService = async (areaId, aconditionId) => {
   });
   return treatmentList || {};
 };
+
+export const getExerciseListByIDsService = async (ids) => {
+  try {
+    // Find all conditions where the id is in the provided ids array
+    const conditions = await models.Condition.findAll({
+      where: {
+        id: ids,
+      },
+      attributes: ["exerciselist"], // Only fetch the 'exerciselist' field
+    });
+
+    // Merge and process the exerciselist strings
+    const mergedExerciseList = new Set(); // Use a Set to avoid duplicates
+
+    conditions.forEach((condition) => {
+      if (condition.exerciselist) {
+        const exerciseIds = condition.exerciselist
+          .split(",") // Split the string by commas
+          .map((id) => id.trim()) // Trim whitespace
+          .filter(
+            (id) => id !== "" && condition.exerciselist.includes(`,${id}`)
+          ) // Ensure it matches the ,XXX, format
+          .map((id) => parseInt(id, 10)) // Convert to integers
+          .filter((id) => !isNaN(id)); // Filter out invalid numbers
+
+        exerciseIds.forEach((id) => mergedExerciseList.add(id)); // Add to the Set
+      }
+    });
+
+    // Convert the Set back to an array and return it
+    return Array.from(mergedExerciseList);
+  } catch (error) {
+    throw new Error("Error fetching exercise list by IDs: " + error.message);
+  }
+};
