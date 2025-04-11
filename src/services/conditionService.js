@@ -2,12 +2,29 @@ import models from "../models/index.js";
 
 // Get all Conditions
 export const getAllConditionsService = async () => {
-  return await models.Condition.findAll();
+  return await models.Condition.findAll({ order: [["acondition", "ASC"]] });
 };
 
 // Get a Condition by ID
 export const getConditionByIdService = async (id) => {
   return await models.Condition.findOne({ where: { id } });
+};
+
+export const getAllBMnameService = async () => {
+  try {
+    const allBMname = await models.Condition.findAll({
+      attributes: ["bmname"],
+      group: ["bmname"],
+      order: [["bmname", "ASC"]],
+    });
+
+    // Filter out undefined and null values
+    return allBMname
+      .map((exercise) => exercise.bmname)
+      .filter((bmname) => bmname !== undefined && bmname !== null);
+  } catch (error) {
+    throw error;
+  }
 };
 
 // Create a new Condition

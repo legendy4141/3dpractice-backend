@@ -6,6 +6,8 @@ const router = express.Router();
 // Route to get all Conditions
 router.get("/", conditionController.getConditions);
 
+router.get("/allBMname", conditionController.getAllBMname);
+
 // Route to get a Condition by ID
 router.get("/:id", conditionController.getConditionById);
 
